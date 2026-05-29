@@ -114,6 +114,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [fetchProfile]);
 
   const signIn = useCallback(async (email: string, password: string) => {
+    console.log('[FluxCore Auth] signIn called', { email });
+    
     // Timeout safety: if Supabase hangs, reject after 10s
     const { data, error } = await Promise.race([
       supabase.auth.signInWithPassword({ email, password }),
@@ -121,6 +123,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setTimeout(() => reject(new Error('Login request timed out. Please check your connection and Supabase configuration.')), 10000)
       ),
     ]);
+    console.log('[FluxCore Auth] signIn response', { hasData: !!data, hasError: !!error });
     if (error) throw error;
 
     // Set loading=false immediately so AuthGuard navigates right away
