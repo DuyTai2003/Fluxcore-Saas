@@ -58,20 +58,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const user = session?.user ?? null;
-      let profile: Profile | null = null;
-      if (user) {
-        try {
-          profile = await fetchProfile(user.id);
-        } catch (err) {
-          console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
+    supabase.auth.getSession()
+      .then(async ({ data: { session } }) => {
+        const user = session?.user ?? null;
+        let profile: Profile | null = null;
+        if (user) {
+          try {
+            profile = await fetchProfile(user.id);
+          } catch (err) {
+            console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
+          }
         }
-      }
-      if (!cancelled) {
-        setState({ user, profile, session, loading: false });
-      }
-    });
+        if (!cancelled) {
+          setState({ user, profile, session, loading: false });
+        }
+      })
+      .catch((err) => {
+        console.error('[FluxCore Auth] getSession failed:', (err as Error).message);
+        if (!cancelled) {
+          setState({ user: null, profile: null, session: null, loading: false });
+        }
+      });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
