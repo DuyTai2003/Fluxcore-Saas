@@ -1,0 +1,171 @@
+{
+  "app": {
+    "name": "FluxCore SaaS",
+    "tagline": "Enterprise Operations Platform",
+    "loading": "Loading FluxCore..."
+  },
+  "auth": {
+    "signIn": "Sign in to your account",
+    "signInBtn": "Sign In",
+    "signingIn": "Signing in...",
+    "register": "Register",
+    "registerBtn": "Create Account",
+    "creatingAccount": "Creating Account...",
+    "createAccount": "Create your account",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full Name",
+    "role": "Role",
+    "noAccount": "Don't have an account?",
+    "createOne": "Create one",
+    "hasAccount": "Already have an account?",
+    "signInLink": "Sign in",
+    "welcomeBack": "Welcome back to FluxCore",
+    "accountCreated": "Account created! Check your email for confirmation.",
+    "loginFailed": "Login failed",
+    "registrationFailed": "Registration failed",
+    "demoHint": "Demo credentials available in README.md"
+  },
+  "roles": {
+    "super_admin": "Super Admin",
+    "manager": "Manager",
+    "operator": "Operator"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "workspaces": "Workspaces",
+    "terminal": "Terminal",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {{name}}",
+    "subtitle": "Real-time operations overview",
+    "resetLayout": "Reset Layout",
+    "exportReport": "Export Report",
+    "kpi": {
+      "totalThroughput": "Total Throughput",
+      "activeWorkspaces": "Active Workspaces",
+      "avgEfficiency": "Avg Efficiency",
+      "operatorsOnline": "Operators Online"
+    },
+    "widgets": {
+      "keyMetrics": "Key Metrics",
+      "hourlyThroughput": "Hourly Throughput vs Target",
+      "workspacePerformance": "Workspace Performance",
+      "sevenDayTrend": "7-Day Trend",
+      "efficiencyDistribution": "Efficiency Distribution"
+    },
+    "hiddenWidgets": "Hidden Widgets",
+    "dragHint": "Drag widgets to reorder • Click the grip icon • Layout auto-saved to localStorage"
+  },
+  "workspaces": {
+    "title": "Workspaces",
+    "subtitle": "Manage all your operational stations",
+    "addWorkspace": "Add Workspace",
+    "search": "Search workspaces...",
+    "noWorkspaces": "No workspaces found",
+    "target": "Target",
+    "currentTask": "Current Task",
+    "none": "None",
+    "pause": "Pause",
+    "start": "Start",
+    "remove": "Remove",
+    "status": {
+      "active": "Active",
+      "idle": "Idle",
+      "paused": "Paused"
+    }
+  },
+  "terminal": {
+    "title": "Operator Terminal",
+    "subtitle": "Scan or enter throughput data",
+    "online": "Online",
+    "offline": "Offline",
+    "camera": {
+      "start": "Start Scanner",
+      "stop": "Stop Camera",
+      "preview": "Camera preview",
+      "title": "QR / Barcode Scanner",
+      "denied": "Camera access denied. Use manual input instead."
+    },
+    "manual": {
+      "title": "Manual Entry",
+      "timeSlot": "Current time slot",
+      "placeholder": "Enter count...",
+      "submit": "Submit",
+      "invalid": "Enter a valid positive number"
+    },
+    "quickAdd": "Quick +1",
+    "recentActivity": "Recent Activity",
+    "noEntries": "No entries yet. Start scanning or enter data above.",
+    "synced": "Synced",
+    "pending": "Pending",
+    "syncRecords": "Sync {{count}} records",
+    "logged": "+{{count}} units logged",
+    "savedOffline": "Saved offline. Will sync when online.",
+    "noOfflineData": "No offline data to sync",
+    "syncedOffline": "Synced {{count}} offline records"
+  },
+  "settings": {
+    "title": "Settings",
+    "tenant": "Tenant",
+    "tabs": {
+      "general": "General",
+      "security": "Security",
+      "notifications": "Notifications",
+      "team": "Team"
+    },
+    "general": {
+      "title": "Organization Info",
+      "orgName": "Organization Name",
+      "urlSlug": "URL Slug",
+      "save": "Save Changes",
+      "saved": "Saved",
+      "savedToast": "Settings saved successfully"
+    },
+    "security": {
+      "title": "Security & Access",
+      "mfa": "Multi-Factor Auth",
+      "mfaDesc": "Require 2FA for all users",
+      "sessionTimeout": "Session Timeout",
+      "sessionTimeoutDesc": "Auto-logout after inactivity",
+      "autoSync": "Auto Data Sync",
+      "autoSyncDesc": "Background sync enabled"
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "email": "Email Notifications",
+      "emailDesc": "Receive alerts via email",
+      "push": "Push Notifications",
+      "pushDesc": "Mobile push alerts",
+      "inApp": "In-App Notifications",
+      "inAppDesc": "Real-time browser alerts",
+      "anomaly": "Anomaly Detection Alerts",
+      "anomalyDesc": "Flag unusual data patterns"
+    },
+    "team": {
+      "title": "Team Members",
+      "you": "(You)"
+    },
+    "language": "Language"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "noNotifications": "No notifications yet"
+  },
+  "common": {
+    "signOut": "Sign out",
+    "perHour": "/hr",
+    "justNow": "just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago"
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt",
+    "zh-Hans": "简体中文",
+    "zh-Hant": "繁體中文"
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "app": {
+    "name": "FluxCore SaaS",
+    "tagline": "企业运营平台",
+    "loading": "正在加载 FluxCore..."
+  },
+  "auth": {
+    "signIn": "登录您的账户",
+    "signInBtn": "登录",
+    "signingIn": "登录中...",
+    "register": "注册",
+    "registerBtn": "创建账户",
+    "creatingAccount": "创建账户中...",
+    "createAccount": "创建您的账户",
+    "email": "邮箱",
+    "password": "密码",
+    "fullName": "姓名",
+    "role": "角色",
+    "noAccount": "还没有账户？",
+    "createOne": "创建一个",
+    "hasAccount": "已有账户？",
+    "signInLink": "登录",
+    "welcomeBack": "欢迎回到 FluxCore",
+    "accountCreated": "账户已创建！请查看邮件确认。",
+    "loginFailed": "登录失败",
+    "registrationFailed": "注册失败",
+    "demoHint": "演示凭证请查看 README.md"
+  },
+  "roles": {
+    "super_admin": "超级管理员",
+    "manager": "经理",
+    "operator": "操作员"
+  },
+  "nav": {
+    "dashboard": "仪表盘",
+    "workspaces": "工作站",
+    "terminal": "终端",
+    "settings": "设置"
+  },
+  "dashboard": {
+    "welcome": "欢迎回来，{{name}}",
+    "subtitle": "实时运营概览",
+    "resetLayout": "重置布局",
+    "exportReport": "导出报告",
+    "kpi": {
+      "totalThroughput": "总产量",
+      "activeWorkspaces": "活跃工作站",
+      "avgEfficiency": "平均效率",
+      "operatorsOnline": "在线操作员"
+    },
+    "widgets": {
+      "keyMetrics": "关键指标",
+      "hourlyThroughput": "每小时产量 vs 目标",
+      "workspacePerformance": "工作站表现",
+      "sevenDayTrend": "7天趋势",
+      "efficiencyDistribution": "效率分布"
+    },
+    "hiddenWidgets": "隐藏的组件",
+    "dragHint": "拖动组件重新排序 • 点击拖拽图标 • 布局自动保存"
+  },
+  "workspaces": {
+    "title": "工作站",
+    "subtitle": "管理所有运营站点",
+    "addWorkspace": "添加工作站",
+    "search": "搜索工作站...",
+    "noWorkspaces": "未找到工作站",
+    "target": "目标",
+    "currentTask": "当前任务",
+    "none": "无",
+    "pause": "暂停",
+    "start": "开始",
+    "remove": "删除",
+    "status": {
+      "active": "运行中",
+      "idle": "空闲",
+      "paused": "已暂停"
+    }
+  },
+  "terminal": {
+    "title": "操作终端",
+    "subtitle": "扫描或输入产量数据",
+    "online": "在线",
+    "offline": "离线",
+    "camera": {
+      "start": "启动扫描器",
+      "stop": "停止摄像头",
+      "preview": "摄像头预览",
+      "title": "二维码/条形码扫描器",
+      "denied": "摄像头权限被拒绝，请手动输入。"
+    },
+    "manual": {
+      "title": "手动输入",
+      "timeSlot": "当前时间段",
+      "placeholder": "输入数量...",
+      "submit": "提交",
+      "invalid": "请输入有效的正数"
+    },
+    "quickAdd": "快速 +1",
+    "recentActivity": "最近活动",
+    "noEntries": "暂无记录。请开始扫描或输入数据。",
+    "synced": "已同步",
+    "pending": "等待中",
+    "syncRecords": "同步 {{count}} 条记录",
+    "logged": "已记录 +{{count}} 单位",
+    "savedOffline": "已离线保存。将在有网络时同步。",
+    "noOfflineData": "没有离线数据需要同步",
+    "syncedOffline": "已同步 {{count}} 条离线记录"
+  },
+  "settings": {
+    "title": "设置",
+    "tenant": "租户",
+    "tabs": {
+      "general": "通用",
+      "security": "安全",
+      "notifications": "通知",
+      "team": "团队"
+    },
+    "general": {
+      "title": "组织信息",
+      "orgName": "组织名称",
+      "urlSlug": "URL 标识",
+      "save": "保存更改",
+      "saved": "已保存",
+      "savedToast": "设置保存成功"
+    },
+    "security": {
+      "title": "安全与访问",
+      "mfa": "多因素认证",
+      "mfaDesc": "要求所有用户使用双重认证",
+      "sessionTimeout": "会话超时",
+      "sessionTimeoutDesc": "不活动时自动退出登录",
+      "autoSync": "自动数据同步",
+      "autoSyncDesc": "已启用后台同步"
+    },
+    "notifications": {
+      "title": "通知偏好",
+      "email": "邮件通知",
+      "emailDesc": "通过邮件接收提醒",
+      "push": "推送通知",
+      "pushDesc": "移动端推送提醒",
+      "inApp": "应用内通知",
+      "inAppDesc": "浏览器实时提醒",
+      "anomaly": "异常检测提醒",
+      "anomalyDesc": "标记异常数据模式"
+    },
+    "team": {
+      "title": "团队成员",
+      "you": "（您）"
+    },
+    "language": "语言"
+  },
+  "notifications": {
+    "title": "通知",
+    "markAllRead": "全部标为已读",
+    "noNotifications": "暂无通知"
+  },
+  "common": {
+    "signOut": "退出登录",
+    "perHour": "/小时",
+    "justNow": "刚刚",
+    "minutesAgo": "{{count}}分钟前",
+    "hoursAgo": "{{count}}小时前",
+    "daysAgo": "{{count}}天前"
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt",
+    "zh-Hans": "简体中文",
+    "zh-Hant": "繁體中文"
+  }
+}

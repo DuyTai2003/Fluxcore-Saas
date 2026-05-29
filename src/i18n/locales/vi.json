@@ -1,0 +1,171 @@
+{
+  "app": {
+    "name": "FluxCore SaaS",
+    "tagline": "Nền tảng Quản trị Doanh nghiệp",
+    "loading": "Đang tải FluxCore..."
+  },
+  "auth": {
+    "signIn": "Đăng nhập vào tài khoản",
+    "signInBtn": "Đăng nhập",
+    "signingIn": "Đang đăng nhập...",
+    "register": "Đăng ký",
+    "registerBtn": "Tạo tài khoản",
+    "creatingAccount": "Đang tạo tài khoản...",
+    "createAccount": "Tạo tài khoản của bạn",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "fullName": "Họ và tên",
+    "role": "Vai trò",
+    "noAccount": "Chưa có tài khoản?",
+    "createOne": "Tạo một cái",
+    "hasAccount": "Đã có tài khoản?",
+    "signInLink": "Đăng nhập",
+    "welcomeBack": "Chào mừng trở lại FluxCore",
+    "accountCreated": "Tài khoản đã tạo! Kiểm tra email để xác nhận.",
+    "loginFailed": "Đăng nhập thất bại",
+    "registrationFailed": "Đăng ký thất bại",
+    "demoHint": "Thông tin demo có trong README.md"
+  },
+  "roles": {
+    "super_admin": "Quản trị viên",
+    "manager": "Quản lý",
+    "operator": "Nhân viên"
+  },
+  "nav": {
+    "dashboard": "Tổng quan",
+    "workspaces": "Trạm làm việc",
+    "terminal": "Thiết bị đầu cuối",
+    "settings": "Cài đặt"
+  },
+  "dashboard": {
+    "welcome": "Chào mừng, {{name}}",
+    "subtitle": "Tổng quan vận hành thời gian thực",
+    "resetLayout": "Đặt lại bố cục",
+    "exportReport": "Xuất báo cáo",
+    "kpi": {
+      "totalThroughput": "Tổng sản lượng",
+      "activeWorkspaces": "Trạm đang hoạt động",
+      "avgEfficiency": "Hiệu suất TB",
+      "operatorsOnline": "Nhân viên online"
+    },
+    "widgets": {
+      "keyMetrics": "Chỉ số chính",
+      "hourlyThroughput": "Sản lượng theo giờ vs Mục tiêu",
+      "workspacePerformance": "Hiệu suất trạm",
+      "sevenDayTrend": "Xu hướng 7 ngày",
+      "efficiencyDistribution": "Phân phối hiệu suất"
+    },
+    "hiddenWidgets": "Widget ẩn",
+    "dragHint": "Kéo widget để sắp xếp • Nhấn nút kéo • Bố cục tự động lưu"
+  },
+  "workspaces": {
+    "title": "Trạm làm việc",
+    "subtitle": "Quản lý tất cả trạm vận hành",
+    "addWorkspace": "Thêm trạm",
+    "search": "Tìm kiếm trạm...",
+    "noWorkspaces": "Không tìm thấy trạm nào",
+    "target": "Mục tiêu",
+    "currentTask": "Công việc hiện tại",
+    "none": "Không có",
+    "pause": "Tạm dừng",
+    "start": "Bắt đầu",
+    "remove": "Xóa",
+    "status": {
+      "active": "Đang chạy",
+      "idle": "Nghỉ",
+      "paused": "Tạm dừng"
+    }
+  },
+  "terminal": {
+    "title": "Thiết bị đầu cuối",
+    "subtitle": "Quét hoặc nhập dữ liệu sản lượng",
+    "online": "Trực tuyến",
+    "offline": "Ngoại tuyến",
+    "camera": {
+      "start": "Mở máy quét",
+      "stop": "Dừng camera",
+      "preview": "Xem trước camera",
+      "title": "Máy quét QR / Mã vạch",
+      "denied": "Quyền truy cập camera bị từ chối. Hãy nhập thủ công."
+    },
+    "manual": {
+      "title": "Nhập thủ công",
+      "timeSlot": "Khung giờ hiện tại",
+      "placeholder": "Nhập số lượng...",
+      "submit": "Gửi",
+      "invalid": "Nhập số hợp lệ"
+    },
+    "quickAdd": "+1 Nhanh",
+    "recentActivity": "Hoạt động gần đây",
+    "noEntries": "Chưa có mục nào. Bắt đầu quét hoặc nhập dữ liệu.",
+    "synced": "Đã đồng bộ",
+    "pending": "Đang chờ",
+    "syncRecords": "Đồng bộ {{count}} bản ghi",
+    "logged": "Đã ghi +{{count}} đơn vị",
+    "savedOffline": "Đã lưu ngoại tuyến. Sẽ đồng bộ khi có mạng.",
+    "noOfflineData": "Không có dữ liệu ngoại tuyến",
+    "syncedOffline": "Đã đồng bộ {{count}} bản ghi ngoại tuyến"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "tenant": "Tổ chức",
+    "tabs": {
+      "general": "Chung",
+      "security": "Bảo mật",
+      "notifications": "Thông báo",
+      "team": "Nhóm"
+    },
+    "general": {
+      "title": "Thông tin tổ chức",
+      "orgName": "Tên tổ chức",
+      "urlSlug": "Đường dẫn URL",
+      "save": "Lưu thay đổi",
+      "saved": "Đã lưu",
+      "savedToast": "Đã lưu cài đặt thành công"
+    },
+    "security": {
+      "title": "Bảo mật & Truy cập",
+      "mfa": "Xác thực đa yếu tố",
+      "mfaDesc": "Yêu cầu 2FA cho tất cả người dùng",
+      "sessionTimeout": "Thời gian hết phiên",
+      "sessionTimeoutDesc": "Tự động đăng xuất khi không hoạt động",
+      "autoSync": "Tự động đồng bộ",
+      "autoSyncDesc": "Đã bật đồng bộ nền"
+    },
+    "notifications": {
+      "title": "Tùy chọn thông báo",
+      "email": "Thông báo qua Email",
+      "emailDesc": "Nhận cảnh báo qua email",
+      "push": "Thông báo đẩy",
+      "pushDesc": "Cảnh báo đẩy trên di động",
+      "inApp": "Thông báo trong ứng dụng",
+      "inAppDesc": "Cảnh báo thời gian thực trên trình duyệt",
+      "anomaly": "Cảnh báo bất thường",
+      "anomalyDesc": "Đánh dấu mẫu dữ liệu bất thường"
+    },
+    "team": {
+      "title": "Thành viên",
+      "you": "(Bạn)"
+    },
+    "language": "Ngôn ngữ"
+  },
+  "notifications": {
+    "title": "Thông báo",
+    "markAllRead": "Đánh dấu đã đọc",
+    "noNotifications": "Chưa có thông báo"
+  },
+  "common": {
+    "signOut": "Đăng xuất",
+    "perHour": "/giờ",
+    "justNow": "vừa xong",
+    "minutesAgo": "{{count}} phút trước",
+    "hoursAgo": "{{count}} giờ trước",
+    "daysAgo": "{{count}} ngày trước"
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt",
+    "zh-Hans": "简体中文",
+    "zh-Hant": "繁體中文"
+  }
+}

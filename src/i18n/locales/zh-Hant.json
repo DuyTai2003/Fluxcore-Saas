@@ -1,0 +1,171 @@
+{
+  "app": {
+    "name": "FluxCore SaaS",
+    "tagline": "企業運營平台",
+    "loading": "正在載入 FluxCore..."
+  },
+  "auth": {
+    "signIn": "登入您的帳戶",
+    "signInBtn": "登入",
+    "signingIn": "登入中...",
+    "register": "註冊",
+    "registerBtn": "建立帳戶",
+    "creatingAccount": "建立帳戶中...",
+    "createAccount": "建立您的帳戶",
+    "email": "電子郵件",
+    "password": "密碼",
+    "fullName": "姓名",
+    "role": "角色",
+    "noAccount": "還沒有帳戶？",
+    "createOne": "建立一個",
+    "hasAccount": "已有帳戶？",
+    "signInLink": "登入",
+    "welcomeBack": "歡迎回到 FluxCore",
+    "accountCreated": "帳戶已建立！請查看郵件確認。",
+    "loginFailed": "登入失敗",
+    "registrationFailed": "註冊失敗",
+    "demoHint": "演示憑證請查看 README.md"
+  },
+  "roles": {
+    "super_admin": "超級管理員",
+    "manager": "經理",
+    "operator": "操作員"
+  },
+  "nav": {
+    "dashboard": "儀表板",
+    "workspaces": "工作站",
+    "terminal": "終端",
+    "settings": "設定"
+  },
+  "dashboard": {
+    "welcome": "歡迎回來，{{name}}",
+    "subtitle": "即時營運概覽",
+    "resetLayout": "重設佈局",
+    "exportReport": "匯出報告",
+    "kpi": {
+      "totalThroughput": "總產量",
+      "activeWorkspaces": "活躍工作站",
+      "avgEfficiency": "平均效率",
+      "operatorsOnline": "線上操作員"
+    },
+    "widgets": {
+      "keyMetrics": "關鍵指標",
+      "hourlyThroughput": "每小時產量 vs 目標",
+      "workspacePerformance": "工作站表現",
+      "sevenDayTrend": "7天趨勢",
+      "efficiencyDistribution": "效率分佈"
+    },
+    "hiddenWidgets": "隱藏的組件",
+    "dragHint": "拖動組件重新排序 • 點擊拖曳圖示 • 佈局自動儲存"
+  },
+  "workspaces": {
+    "title": "工作站",
+    "subtitle": "管理所有營運站點",
+    "addWorkspace": "新增工作站",
+    "search": "搜尋工作站...",
+    "noWorkspaces": "未找到工作站",
+    "target": "目標",
+    "currentTask": "目前任務",
+    "none": "無",
+    "pause": "暫停",
+    "start": "開始",
+    "remove": "刪除",
+    "status": {
+      "active": "執行中",
+      "idle": "閒置",
+      "paused": "已暫停"
+    }
+  },
+  "terminal": {
+    "title": "操作終端",
+    "subtitle": "掃描或輸入產量資料",
+    "online": "線上",
+    "offline": "離線",
+    "camera": {
+      "start": "啟動掃描器",
+      "stop": "停止攝像頭",
+      "preview": "攝像頭預覽",
+      "title": "QR碼/條碼掃描器",
+      "denied": "攝像頭權限被拒絕，請手動輸入。"
+    },
+    "manual": {
+      "title": "手動輸入",
+      "timeSlot": "目前時段",
+      "placeholder": "輸入數量...",
+      "submit": "提交",
+      "invalid": "請輸入有效的正數"
+    },
+    "quickAdd": "快速 +1",
+    "recentActivity": "最近活動",
+    "noEntries": "暫無記錄。請開始掃描或輸入資料。",
+    "synced": "已同步",
+    "pending": "等待中",
+    "syncRecords": "同步 {{count}} 條記錄",
+    "logged": "已記錄 +{{count}} 單位",
+    "savedOffline": "已離線儲存。將在有網路時同步。",
+    "noOfflineData": "沒有離線資料需要同步",
+    "syncedOffline": "已同步 {{count}} 條離線記錄"
+  },
+  "settings": {
+    "title": "設定",
+    "tenant": "租戶",
+    "tabs": {
+      "general": "一般",
+      "security": "安全",
+      "notifications": "通知",
+      "team": "團隊"
+    },
+    "general": {
+      "title": "組織資訊",
+      "orgName": "組織名稱",
+      "urlSlug": "URL 標識",
+      "save": "儲存變更",
+      "saved": "已儲存",
+      "savedToast": "設定儲存成功"
+    },
+    "security": {
+      "title": "安全與存取",
+      "mfa": "多因素認證",
+      "mfaDesc": "要求所有使用者使用雙重認證",
+      "sessionTimeout": "工作階段逾時",
+      "sessionTimeoutDesc": "閒置時自動登出",
+      "autoSync": "自動資料同步",
+      "autoSyncDesc": "已啟用背景同步"
+    },
+    "notifications": {
+      "title": "通知偏好",
+      "email": "郵件通知",
+      "emailDesc": "透過郵件接收提醒",
+      "push": "推播通知",
+      "pushDesc": "行動裝置推播提醒",
+      "inApp": "應用程式內通知",
+      "inAppDesc": "瀏覽器即時提醒",
+      "anomaly": "異常偵測提醒",
+      "anomalyDesc": "標記異常資料模式"
+    },
+    "team": {
+      "title": "團隊成員",
+      "you": "（您）"
+    },
+    "language": "語言"
+  },
+  "notifications": {
+    "title": "通知",
+    "markAllRead": "全部標為已讀",
+    "noNotifications": "暫無通知"
+  },
+  "common": {
+    "signOut": "登出",
+    "perHour": "/小時",
+    "justNow": "剛剛",
+    "minutesAgo": "{{count}}分鐘前",
+    "hoursAgo": "{{count}}小時前",
+    "daysAgo": "{{count}}天前"
+  },
+  "languages": {
+    "en": "English",
+    "vi": "Tiếng Việt",
+    "zh-Hans": "简体中文",
+    "zh-Hant": "繁體中文"
+  }
+}
