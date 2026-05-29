@@ -130,17 +130,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) throw error;
 
     if (data.user) {
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: data.user.id,
-          email,
-          full_name: fullName,
-          role,
-          tenant_id: data.user.id,
-        });
+      const tenantSlug = `tenant-${data.user.id.slice(0, 8)}`;
 
-      if (profileError) throw profileError;
+      try {
+        await supabase.rpc('create_tenant_and_profile', {
+          p_user_id: data.user.id,
+          p_email: email,
+          p_full_name: fullName,
+          p_role: role,
+          p_tenant_name: fullName,
+          p_tenant_slug: tenantSlug,
+        });
+      } catch (_rpcErr) {
+        const { data: existingTenant } = await supabase
+          .from('tenants')
+          .select('id')
+          .eq('slug', tenantSlug)
+          .maybeSingle();
+
+        if (existingTenant) {
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .insert({
+              id: data.user.id,
+              email,
+              full_name: fullName,
+              role,
+              tenant_id: existingTenant.id,
+            });
+
+          if (profileError) throw new Error(`Profile creation failed: ${profileError.message}`);
+        } else {
+          throw _rpcErr instanceof Error ? _rpcErr : new Error('Tenant creation failed. Please run the updated schema.sql in Supabase SQL Editor.');
+        }
+      }
     }
   }, []);
 

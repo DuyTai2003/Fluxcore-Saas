@@ -281,7 +281,38 @@ CREATE TRIGGER trigger_profiles_updated_at
     EXECUTE FUNCTION public.handle_updated_at();
 
 -- ═══════════════════════════════════════════════════════════════════════════
--- STEP 7: SEED DATA (Manual — uncomment and run after creating your first user)
+-- STEP 7: CREATE_TENANT_AND_PROFILE RPC (Atomic sign-up helper)
+-- ═══════════════════════════════════════════════════════════════════════════
+
+CREATE OR REPLACE FUNCTION public.create_tenant_and_profile(
+    p_user_id UUID,
+    p_email TEXT,
+    p_full_name TEXT,
+    p_role TEXT,
+    p_tenant_name TEXT,
+    p_tenant_slug TEXT
+)
+RETURNS UUID
+LANGUAGE plpgsql SECURITY DEFINER
+AS $$
+DECLARE
+    v_tenant_id UUID;
+BEGIN
+    -- 1. Create tenant (bypasses RLS via SECURITY DEFINER)
+    INSERT INTO public.tenants (name, slug, plan)
+    VALUES (p_tenant_name, p_tenant_slug, 'pro')
+    RETURNING id INTO v_tenant_id;
+
+    -- 2. Create profile linked to that tenant
+    INSERT INTO public.profiles (id, email, full_name, role, tenant_id)
+    VALUES (p_user_id, p_email, p_full_name, p_role, v_tenant_id);
+
+    RETURN v_tenant_id;
+END;
+$$;
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- STEP 8: SEED DATA (Manual — uncomment and run after creating your first user)
 -- ═══════════════════════════════════════════════════════════════════════════
 -- INSERT INTO public.tenants (name, slug, plan) VALUES ('Demo Organization', 'demo', 'pro');
 -- INSERT INTO public.profiles (id, email, full_name, role, tenant_id)
