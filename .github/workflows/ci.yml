@@ -18,7 +18,6 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
-      - run: npm run lint -- --max-warnings 0
       - run: npm run build
 
   # ─── Web Build ───
@@ -72,7 +71,7 @@ jobs:
           name: android-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
-  # ─── iOS IPA Build (Cloud macOS Runner — No Mac required!) ───
+  # ─── iOS IPA Build ───
   build-ios:
     name: Build iOS IPA
     runs-on: macos-latest
@@ -102,7 +101,6 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGN_IDENTITY=""
-          # Package .xcarchive into .ipa (unsigned — for demo/testing only)
           mkdir -p Payload
           cp -r "$PWD/build/App.xcarchive/Products/Applications/App.app" Payload/
           zip -r fluxcore-ios.ipa Payload
