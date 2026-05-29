@@ -57,39 +57,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
-    const AUTH_TIMEOUT_MS = 8000;
 
-    const initAuth = async () => {
-      try {
-        const sessionResult = await Promise.race([
-          supabase.auth.getSession(),
-          new Promise<never>((_, reject) =>
-            setTimeout(() => reject(new Error('AUTH_TIMEOUT')), AUTH_TIMEOUT_MS)
-          ),
-        ]);
-
-        const session = sessionResult.data.session;
-        const user = session?.user ?? null;
-        let profile: Profile | null = null;
-        if (user) {
-          try {
-            profile = await fetchProfile(user.id);
-          } catch (err) {
-            console.warn('[FluxCore Auth] Could not load profile (may need to run seed SQL):', (err as Error).message);
-          }
-        }
-        if (!cancelled) {
-          setState({ user, profile, session, loading: false });
-        }
-      } catch (err) {
-        console.warn('[FluxCore Auth] Supabase unreachable, starting in offline mode:', (err as Error).message);
-        if (!cancelled) {
-          setState({ user: null, profile: null, session: null, loading: false });
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      const user = session?.user ?? null;
+      let profile: Profile | null = null;
+      if (user) {
+        try {
+          profile = await fetchProfile(user.id);
+        } catch (err) {
+          console.warn('[FluxCore Auth] Could not load profile (may need to run seed SQL):', (err as Error).message);
         }
       }
-    };
-
-    initAuth();
+      if (!cancelled) {
+        setState({ user, profile, session, loading: false });
+      }
+    });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
