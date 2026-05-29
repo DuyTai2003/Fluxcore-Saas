@@ -19,6 +19,20 @@
 
 ---
 
+### 🌐 Live Demo: [https://fluxcore-saas.vercel.app](https://fluxcore-saas.vercel.app)
+
+---
+
+## 📸 Screenshots
+
+| Dashboard | Workspaces | Terminal |
+|---|---|---|
+| ![Dashboard](./screenshots/1.png) | ![Workspaces](./screenshots/2.png) | ![Terminal](./screenshots/3.png) |
+
+> 💡 **Add your screenshots** to the `screenshots/` folder as `1.png`, `2.png`, `3.png`
+
+---
+
 ## 🎯 Why This Project Exists
 
 FluxCore SaaS is a **showroom project** designed to prove full-stack engineering capability. Instead of a generic to-do app, this demonstrates the exact patterns enterprise clients pay for:
