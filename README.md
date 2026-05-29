@@ -29,8 +29,6 @@
 |---|---|---|
 | ![Dashboard](./screenshots/1.png) | ![Workspaces](./screenshots/2.png) | ![Terminal](./screenshots/3.png) |
 
-> 💡 **Add your screenshots** to the `screenshots/` folder as `1.png`, `2.png`, `3.png`
-
 ---
 
 ## 🎯 Why This Project Exists
@@ -75,77 +73,7 @@ FluxCore SaaS is a **showroom project** designed to prove full-stack engineering
 
 ---
 
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js ≥ 18
-- Supabase account ([free tier](https://supabase.com))
-- Git
-
-### 1. Clone & Install
-
-```bash
-git clone https://github.com/your-username/fluxcore-saas.git
-cd fluxcore-saas
-npm install
-```
-
-### 2. Setup Supabase
-
-1. Create a project at [supabase.com](https://app.supabase.com)
-2. Go to **SQL Editor** → paste the contents of [`supabase/schema.sql`](supabase/schema.sql) → Click **Run**
-3. Go to **Settings → API** → copy your Project URL and anon key
-4. Create `.env` file:
-
-```env
-VITE_SUPABASE_URL=https://your-project-id.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...
-```
-
-### 3. Configure Auth (Email/Password)
-
-In Supabase Dashboard → Authentication → Providers:
-- Enable **Email** provider
-- Disable "Confirm email" for development (optional)
-
-### 4. Create Seed Data
-
-After registering your first user, run this in SQL Editor to set them as Super Admin:
-
-```sql
-INSERT INTO public.tenants (name, slug, plan) VALUES ('Demo Organization', 'demo', 'pro');
-
-INSERT INTO public.profiles (id, email, full_name, role, tenant_id)
-VALUES ('YOUR-USER-UUID', 'admin@fluxcore.app', 'Your Name', 'super_admin',
-        (SELECT id FROM public.tenants WHERE slug = 'demo'));
-```
-
-### 5. Run Dev Server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) → Register → Login → Done!
-
----
-
-## 📱 Mobile Build (Android + iOS)
-
-### Android
-```bash
-npm run build
-npx cap add android
-npx cap sync
-npx cap open android   # Opens Android Studio for APK build
-```
-
-### iOS (via GitHub Actions — no Mac required!)
-The project includes a CI/CD pipeline that builds iOS `.ipa` files on macOS cloud runners. See [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
-
----
-
-## 🗄️ Database Schema
+## ️ Database Schema
 
 | Table | Purpose |
 |---|---|
@@ -254,7 +182,15 @@ I built this entire platform — from database schema to mobile deployment pipel
 
 ---
 
-## 📄 License
+## � Other Projects
+
+| Project | Description | Stack |
+|---|---|---|
+| [📚 Học Tiếng Trung Phồn Thể](https://github.com/DuyTai2003/hoctiengphonthe) | Full-stack TOCFL Chinese learning app — 7,517 words, 100 readings, YouTube podcast listening with synced transcripts | Next.js 16 · TypeScript · Tailwind CSS v4 · DeepSeek AI · Netlify |
+
+---
+
+## �📄 License
 
 MIT — Feel free to use this as a template for your own SaaS projects.
 
