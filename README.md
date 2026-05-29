@@ -182,14 +182,6 @@ I built this entire platform — from database schema to mobile deployment pipel
 
 ---
 
-## � Other Projects
-
-| Project | Description | Stack |
-|---|---|---|
-| [📚 Học Tiếng Trung Phồn Thể](https://github.com/DuyTai2003/hoctiengphonthe) | Full-stack TOCFL Chinese learning app — 7,517 words, 100 readings, YouTube podcast listening with synced transcripts | Next.js 16 · TypeScript · Tailwind CSS v4 · DeepSeek AI · Netlify |
-
----
-
 ## �📄 License
 
 MIT — Feel free to use this as a template for your own SaaS projects.
