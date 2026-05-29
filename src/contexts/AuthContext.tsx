@@ -115,9 +115,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [fetchProfile]);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
-  }, []);
+
+    if (data.user) {
+      let profile: Profile | null = null;
+      try {
+        profile = await fetchProfile(data.user.id);
+      } catch (err) {
+        console.warn('[FluxCore Auth] Could not load profile on sign in:', (err as Error).message);
+      }
+      setState({
+        user: data.user,
+        profile,
+        session: data.session,
+        loading: false,
+      });
+    }
+  }, [fetchProfile]);
 
   const signUp = useCallback(async (email: string, password: string, fullName: string, role: UserRole) => {
     const { data, error } = await supabase.auth.signUp({
