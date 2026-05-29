@@ -115,24 +115,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [fetchProfile]);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
-
-    if (data.user) {
-      let profile: Profile | null = null;
-      try {
-        profile = await fetchProfile(data.user.id);
-      } catch (err) {
-        console.warn('[FluxCore Auth] Could not load profile on sign in:', (err as Error).message);
-      }
-      setState({
-        user: data.user,
-        profile,
-        session: data.session,
-        loading: false,
-      });
-    }
-  }, [fetchProfile]);
+  }, []);
 
   const signUp = useCallback(async (email: string, password: string, fullName: string, role: UserRole) => {
     const { data, error } = await supabase.auth.signUp({
@@ -145,40 +130,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) throw error;
 
     if (data.user) {
-      const tenantSlug = `tenant-${data.user.id.slice(0, 8)}`;
+      // Create a tenant for this user, then create the profile
+      const { data: tenant, error: tenantError } = await supabase
+        .from('tenants')
+        .insert({
+          name: fullName,
+          slug: `tenant-${data.user.id.slice(0, 8)}`,
+          plan: 'pro',
+        })
+        .select('id')
+        .single();
 
-      try {
-        await supabase.rpc('create_tenant_and_profile', {
-          p_user_id: data.user.id,
-          p_email: email,
-          p_full_name: fullName,
-          p_role: role,
-          p_tenant_name: fullName,
-          p_tenant_slug: tenantSlug,
-        });
-      } catch (_rpcErr) {
-        const { data: existingTenant } = await supabase
-          .from('tenants')
-          .select('id')
-          .eq('slug', tenantSlug)
-          .maybeSingle();
-
-        if (existingTenant) {
-          const { error: profileError } = await supabase
-            .from('profiles')
-            .insert({
-              id: data.user.id,
-              email,
-              full_name: fullName,
-              role,
-              tenant_id: existingTenant.id,
-            });
-
-          if (profileError) throw new Error(`Profile creation failed: ${profileError.message}`);
-        } else {
-          throw _rpcErr instanceof Error ? _rpcErr : new Error('Tenant creation failed. Please run the updated schema.sql in Supabase SQL Editor.');
-        }
+      if (tenantError) {
+        console.error('[FluxCore Auth] Failed to create tenant:', tenantError.message);
+        throw new Error(`Tenant creation failed: ${tenantError.message}. Please run supabase/schema.sql in Supabase SQL Editor first.`);
       }
+
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          id: data.user.id,
+          email,
+          full_name: fullName,
+          role,
+          tenant_id: tenant.id,
+        });
+
+      if (profileError) throw profileError;
     }
   }, []);
 

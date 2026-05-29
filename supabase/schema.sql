@@ -162,11 +162,9 @@ CREATE POLICY "tenant_read_own" ON public.tenants
     FOR SELECT
     USING (id = public.get_tenant_id());
 
-CREATE POLICY "tenant_insert_admin" ON public.tenants
+CREATE POLICY "tenant_insert_auth" ON public.tenants
     FOR INSERT
-    WITH CHECK (
-        EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'super_admin')
-    );
+    WITH CHECK (auth.uid() IS NOT NULL);
 
 CREATE POLICY "tenant_update_admin" ON public.tenants
     FOR UPDATE
