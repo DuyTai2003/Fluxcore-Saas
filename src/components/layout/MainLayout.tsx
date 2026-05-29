@@ -37,7 +37,7 @@ export function MainLayout() {
   ];
 
   const filteredNav = navItems.filter((item) =>
-    profile ? item.roles.includes(profile.role) : false
+    profile ? item.roles.includes(profile.role) : true
   );
 
   return (
