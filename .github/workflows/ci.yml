@@ -108,3 +108,4 @@ jobs:
         with:
           name: ios-ipa
           path: ios/App/fluxcore-ios.ipa
+          if-no-files-found: warn
