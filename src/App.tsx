@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
@@ -56,8 +57,19 @@ function RoleGuard({
   children: React.ReactNode;
   allowedRoles: ('super_admin' | 'manager' | 'operator')[];
 }) {
-  const { profile } = useAuth();
-  if (!profile || !allowedRoles.includes(profile.role)) {
+  const { profile, loading } = useAuth();
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+          <p className="text-sm text-muted-foreground">Loading FluxCore...</p>
+        </div>
+      </div>
+    );
+  }
+  if (profile && !allowedRoles.includes(profile.role)) {
+    toast.error('Bạn không có quyền truy cập vào mục này');
     return <Navigate to="/dashboard" replace />;
   }
   return <>{children}</>;
