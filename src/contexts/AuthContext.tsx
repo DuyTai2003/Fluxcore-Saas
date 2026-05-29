@@ -58,8 +58,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
 
+    // Safety timeout: if getSession hangs, force loading=false after 5s
+    const safetyTimeout = setTimeout(() => {
+      if (!cancelled) {
+        console.warn('[FluxCore Auth] getSession timed out after 5s, forcing loading=false');
+        setState({ user: null, profile: null, session: null, loading: false });
+      }
+    }, 5000);
+
     supabase.auth.getSession()
       .then(async ({ data: { session } }) => {
+        clearTimeout(safetyTimeout);
         const user = session?.user ?? null;
         let profile: Profile | null = null;
         if (user) {
@@ -74,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       })
       .catch((err) => {
+        clearTimeout(safetyTimeout);
         console.error('[FluxCore Auth] getSession failed:', (err as Error).message);
         if (!cancelled) {
           setState({ user: null, profile: null, session: null, loading: false });
