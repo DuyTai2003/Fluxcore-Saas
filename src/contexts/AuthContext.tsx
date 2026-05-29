@@ -1,15 +1,27 @@
 import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import * as AuthApi from '@/lib/supabase-auth';
 import type { Database } from '@/lib/supabase.types';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 type UserRole = Profile['role'];
 
+// Minimal user/session types matching what we get from the API
+interface AuthUser {
+  id: string;
+  email: string;
+}
+interface AuthSession {
+  access_token: string;
+  refresh_token: string;
+  expires_at: number;
+  user: AuthUser;
+}
+
 interface AuthState {
-  user: User | null;
+  user: AuthUser | null;
   profile: Profile | null;
-  session: Session | null;
+  session: AuthSession | null;
   loading: boolean;
 }
 
@@ -58,103 +70,72 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
 
-    // Safety timeout: if getSession hangs, force loading=false after 5s
-    const safetyTimeout = setTimeout(() => {
-      if (!cancelled) {
-        console.warn('[FluxCore Auth] getSession timed out after 5s, forcing loading=false');
-        setState({ user: null, profile: null, session: null, loading: false });
+    // Try to restore session from localStorage
+    const storedSession = localStorage.getItem('fluxcore_session');
+    if (storedSession) {
+      try {
+        const session: AuthSession = JSON.parse(storedSession);
+        if (session.expires_at > Date.now() / 1000) {
+          // Session still valid, try to refresh
+          AuthApi.getSession(session.access_token)
+            .then((user) => {
+              if (!cancelled) {
+                const u: AuthUser = { id: user.id, email: user.email };
+                setState({ user: u, profile: null, session, loading: false });
+                // Fetch profile in background
+                fetchProfile(u.id).then((p) => {
+                  if (p && !cancelled) setState((prev) => ({ ...prev, profile: p }));
+                }).catch(() => {});
+              }
+            })
+            .catch(() => {
+              // Token expired, clear
+              localStorage.removeItem('fluxcore_session');
+              if (!cancelled) setState({ user: null, profile: null, session: null, loading: false });
+            });
+          return () => { cancelled = true; };
+        } else {
+          localStorage.removeItem('fluxcore_session');
+        }
+      } catch {
+        localStorage.removeItem('fluxcore_session');
       }
-    }, 5000);
+    }
 
-    supabase.auth.getSession()
-      .then(async ({ data: { session } }) => {
-        clearTimeout(safetyTimeout);
-        const user = session?.user ?? null;
-        let profile: Profile | null = null;
-        if (user) {
-          try {
-            profile = await fetchProfile(user.id);
-          } catch (err) {
-            console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
-          }
-        }
-        if (!cancelled) {
-          setState({ user, profile, session, loading: false });
-        }
-      })
-      .catch((err) => {
-        clearTimeout(safetyTimeout);
-        console.error('[FluxCore Auth] getSession failed:', (err as Error).message);
-        if (!cancelled) {
-          setState({ user: null, profile: null, session: null, loading: false });
-        }
-      });
+    // No valid stored session, just show login
+    if (!cancelled) {
+      setState({ user: null, profile: null, session: null, loading: false });
+    }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        const user = session?.user ?? null;
-        let profile: Profile | null = null;
-        if (user) {
-          try {
-            profile = await fetchProfile(user.id);
-          } catch (err) {
-            console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
-          }
-        }
-        if (!cancelled) {
-          setState({ user, profile, session, loading: false });
-        }
-      }
-    );
-
-    return () => {
-      cancelled = true;
-      subscription.unsubscribe();
-    };
+    return () => { cancelled = true; };
   }, [fetchProfile]);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    console.log('[FluxCore Auth] signIn called', { email });
-    
-    // Timeout safety: if Supabase hangs, reject after 10s
-    const { data, error } = await Promise.race([
-      supabase.auth.signInWithPassword({ email, password }),
-      new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error('Login request timed out. Please check your connection and Supabase configuration.')), 10000)
-      ),
-    ]);
-    console.log('[FluxCore Auth] signIn response', { hasData: !!data, hasError: !!error });
-    if (error) throw error;
+    const data = await AuthApi.signInWithPassword(email, password);
 
-    // Set loading=false immediately so AuthGuard navigates right away
-    if (data.user) {
-      setState({
-        user: data.user,
-        profile: null,
-        session: data.session,
-        loading: false,
-      });
+    const user: AuthUser = { id: data.user.id, email: data.user.email };
+    const session: AuthSession = {
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+      expires_at: data.expires_at,
+      user,
+    };
 
-      // Fetch profile in background
-      fetchProfile(data.user.id).then((profile) => {
-        if (profile) {
-          setState((prev) => ({ ...prev, profile }));
-        }
-      }).catch((err) => {
-        console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
-      });
-    }
+    // Store session for persistence
+    localStorage.setItem('fluxcore_session', JSON.stringify(session));
+
+    setState({ user, profile: null, session, loading: false });
+
+    // Fetch profile in background
+    fetchProfile(user.id).then((profile) => {
+      if (profile) setState((prev) => ({ ...prev, profile }));
+    }).catch((err) => {
+      console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
+    });
   }, [fetchProfile]);
 
   const signUp = useCallback(async (email: string, password: string, fullName: string, role: UserRole) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/login`,
-      },
-    });
-    if (error) throw error;
+    const data = await AuthApi.signUpWithPassword(email, password);
 
     if (data.user) {
       const { data: tenant, error: tenantError } = await supabase
@@ -187,9 +168,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
-    await supabase.auth.signOut();
+    const token = state.session?.access_token;
+    localStorage.removeItem('fluxcore_session');
     setState({ user: null, profile: null, session: null, loading: false });
-  }, []);
+    if (token) {
+      AuthApi.signOut(token).catch(() => {});
+    }
+  }, [state.session]);
 
   const value: AuthContextType = {
     ...state,
