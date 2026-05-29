@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           profile = await fetchProfile(user.id);
         } catch (err) {
-          console.warn('[FluxCore Auth] Could not load profile (may need to run seed SQL):', (err as Error).message);
+          console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
         }
       }
       if (!cancelled) {
@@ -97,9 +97,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [fetchProfile]);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
-  }, []);
+
+    // Set loading=false immediately so AuthGuard navigates right away
+    if (data.user) {
+      setState({
+        user: data.user,
+        profile: null,
+        session: data.session,
+        loading: false,
+      });
+
+      // Fetch profile in background
+      fetchProfile(data.user.id).then((profile) => {
+        if (profile) {
+          setState((prev) => ({ ...prev, profile }));
+        }
+      }).catch((err) => {
+        console.warn('[FluxCore Auth] Could not load profile:', (err as Error).message);
+      });
+    }
+  }, [fetchProfile]);
 
   const signUp = useCallback(async (email: string, password: string, fullName: string, role: UserRole) => {
     const { data, error } = await supabase.auth.signUp({
@@ -112,7 +131,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (error) throw error;
 
     if (data.user) {
-      // Create a tenant for this user, then create the profile
       const { data: tenant, error: tenantError } = await supabase
         .from('tenants')
         .insert({
