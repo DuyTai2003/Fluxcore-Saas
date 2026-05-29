@@ -114,7 +114,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [fetchProfile]);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    // Timeout safety: if Supabase hangs, reject after 10s
+    const { data, error } = await Promise.race([
+      supabase.auth.signInWithPassword({ email, password }),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Login request timed out. Please check your connection and Supabase configuration.')), 10000)
+      ),
+    ]);
     if (error) throw error;
 
     // Set loading=false immediately so AuthGuard navigates right away
